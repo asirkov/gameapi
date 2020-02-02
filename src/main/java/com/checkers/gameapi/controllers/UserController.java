@@ -1,6 +1,6 @@
 package com.checkers.gameapi.controllers;
 
-import com.checkers.gameapi.entities.User;
+import com.checkers.gameapi.entities.UserDto;
 import com.checkers.gameapi.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,48 +11,47 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/")
-public class Controller {
+public class UserController {
     @Autowired
     private UserRepository userRepository;
 
     @GetMapping("/users")
-    public List<User> getUsersList() {
+    public List<UserDto> getUsersList() {
         return userRepository.findAll();
     }
 
     @GetMapping("/users/{id}")
-    public User getUser(@PathVariable("id") Long userId) throws Exception {
+    public UserDto getUser(@PathVariable("id") Long userId) throws Exception {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new Exception("Can`t get user with id=" + userId));
     }
 
     @PostMapping("/users")
-    public User postUser(@Valid @RequestBody User user) {
-        return userRepository.save(user);
+    public UserDto postUser(@Valid @RequestBody UserDto userDto) {
+        return userRepository.save(userDto);
     }
 
     @PutMapping("/users/{id}")
-    public User putUser(@PathVariable("id") Long userId,
-                        @Valid @RequestBody User newUser) throws Exception {
-        User oldUser = userRepository.findById(userId)
-                .orElseThrow(() -> new Exception("Can`t put user=" + newUser.toString() +
+    public UserDto putUser(@PathVariable("id") Long userId,
+                           @Valid @RequestBody UserDto newUserDto) throws Exception {
+        UserDto oldUserDto = userRepository.findById(userId)
+                .orElseThrow(() -> new Exception("Can`t put user=" + newUserDto.toString() +
                                                 " to id=" + userId));
 
-        oldUser.setId(newUser.getId());
-        oldUser.setLogin(newUser.getLogin());
-        oldUser.setPasswordHash(newUser.getPasswordHash());
-        oldUser.setPasswordSalt(newUser.getPasswordSalt());
-        oldUser.setPlayerId(newUser.getPlayerId());
+        oldUserDto.setId(newUserDto.getId());
+        oldUserDto.setLogin(newUserDto.getLogin());
+//        oldUser.setPasswordHash(newUser.getPasswordHash());
+//        oldUser.setPasswordSalt(newUser.getPasswordSalt());
 
-        return userRepository.save(oldUser);
+        return userRepository.save(oldUserDto);
     }
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable(name="id", required=true) Long userId) throws Exception {
-        User oldUser = userRepository.findById(userId)
+        UserDto oldUserDto = userRepository.findById(userId)
                 .orElseThrow(() -> new Exception("Can`t delete user with id=" + userId));
 
-        userRepository.delete(oldUser);
+        userRepository.delete(oldUserDto);
         return ResponseEntity.ok().build();
     }
 }

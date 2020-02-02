@@ -1,7 +1,6 @@
 package com.checkers.gameapi.entities;
 
-
-import com.checkers.gameapi.entities.enums.MoveType;
+import com.checkers.gameapi.enums.MoveType;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -20,8 +19,8 @@ public class Move {
     @NotBlank
     private Long gameId;
 
-//    @NotBlank
-//    private MoveType moveType;
+    @NotBlank
+    private MoveType moveType;
 
     private String moveFrom;
     private String moveTo;

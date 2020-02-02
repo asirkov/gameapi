@@ -1,6 +1,7 @@
 package com.checkers.gameapi.entities;
 
 
+import com.checkers.gameapi.enums.GameResult;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -23,10 +24,7 @@ public class Game {
     @NotBlank
     private Long participant2Id;
 
-    @Transient
-    private Player participant1;
-    @Transient
-    private Player participant2;
+    private GameResult result;
 
     private Timestamp startTime;
 }

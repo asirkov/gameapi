@@ -33,8 +33,8 @@ CREATE TABLE `game` (
   PRIMARY KEY (`id`),
   KEY `participant_1_id_player_id_idx` (`participant_1_id`),
   KEY `participant_2_id_player_id_idx` (`participant_2_id`),
-  CONSTRAINT `participant_1_id_player_id` FOREIGN KEY (`participant_1_id`) REFERENCES `player` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `participant_2_id_player_id` FOREIGN KEY (`participant_2_id`) REFERENCES `player` (`id`) ON UPDATE CASCADE
+  CONSTRAINT `participant_1_id_player_id` FOREIGN KEY (`participant_1_id`) REFERENCES `playerDto` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `participant_2_id_player_id` FOREIGN KEY (`participant_2_id`) REFERENCES `playerDto` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -59,13 +59,13 @@ CREATE TABLE `move` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `player`
+-- Table structure for table `playerDto`
 --
 
-DROP TABLE IF EXISTS `player`;
+DROP TABLE IF EXISTS `playerDto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `player` (
+CREATE TABLE `playerDto` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `player_name` varchar(128) NOT NULL,
   `games_count` bigint(20) DEFAULT NULL,
@@ -79,13 +79,13 @@ CREATE TABLE `player` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `user`
+-- Table structure for table `userDto`
 --
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `userDto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user` (
+CREATE TABLE `userDto` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `login` varchar(128) NOT NULL,
   `password_hash` varchar(128) NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `login_UNIQUE` (`login`),
   KEY `player_id_user_id_idx` (`player_id`),
-  CONSTRAINT `player_id_user_id` FOREIGN KEY (`player_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE
+  CONSTRAINT `player_id_user_id` FOREIGN KEY (`player_id`) REFERENCES `userDto` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

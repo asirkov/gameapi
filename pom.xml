@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>gameapi</name>
     <description>DB API for Checkers game</description>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>11</java.version>
@@ -47,7 +48,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
+            <version>8.0.19</version>
         </dependency>
 
         <dependency>
