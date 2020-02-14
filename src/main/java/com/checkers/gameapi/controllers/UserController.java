@@ -39,7 +39,7 @@ public class UserController {
                                                 " to id=" + userId));
 
         oldUserDto.setId(newUserDto.getId());
-        oldUserDto.setLogin(newUserDto.getLogin());
+        oldUserDto.setUsername(newUserDto.getUsername());
 //        oldUser.setPasswordHash(newUser.getPasswordHash());
 //        oldUser.setPasswordSalt(newUser.getPasswordSalt());
 

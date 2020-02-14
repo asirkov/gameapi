@@ -1,36 +1,62 @@
 package com.checkers.gameapi.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
 @Table(name="user")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(value={"passwordHash", "passwordSalt"})
+@JsonIgnoreProperties(value={"password", "passwordSalt"})
 public class UserDto {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
     private Long id;
 
     @NotNull
-    private String login;
+    @Column(name = "username")
+    private String username;
 
     @NotNull
-    @JsonIgnore
-    private String passwordHash;
+    @Column(name = "password")
+    private String password;
 
     @NotNull
-    @JsonIgnore
+    @Column(name = "password_salt")
     private String passwordSalt;
+
+    @NotNull
+    @Column(name = "player_name")
+    private String playerName;
+
+    @NotNull
+    @Column(name = "games_count")
+    private Long gamesCount;
+
+    @NotNull
+    @Column(name = "wins_count")
+    private Long winsCount;
+
+    @NotNull
+    @Column(name = "loses_count")
+    private Long losesCount;
+
+    @NotNull
+    @Column(name = "avatar_data")
+    private byte[] avatarData;
+
+    @NotNull
+    @Column(name = "active")
+    private boolean active;
+
+    @NotNull
+    @Column(name = "update_time")
+    private Long updateTime;
 }
 
 
