@@ -1,6 +1,6 @@
-package com.checkers.gameapi.entities;
+package com.checkers.gameapi.dto;
 
-import com.checkers.gameapi.enums.MoveType;
+import com.checkers.gameapi.dto.enums.MoveType;
 import lombok.Data;
 
 import javax.persistence.Entity;

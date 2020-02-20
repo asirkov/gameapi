@@ -1,13 +1,11 @@
-package com.checkers.gameapi.entities;
+package com.checkers.gameapi.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -16,15 +14,8 @@ import javax.validation.constraints.NotNull;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FriendDto {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @JsonIgnore
-    private Long primaryPlayerId;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name="secondary_player_id")
-    private PlayerDto friend;
 }

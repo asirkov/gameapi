@@ -1,6 +1,6 @@
-package com.checkers.gameapi.controllers;
+package com.checkers.gameapi.rest;
 
-import com.checkers.gameapi.entities.FriendDto;
+import com.checkers.gameapi.dto.FriendDto;
 import com.checkers.gameapi.repositories.FriendRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

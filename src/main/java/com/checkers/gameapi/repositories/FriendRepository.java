@@ -1,6 +1,6 @@
 package com.checkers.gameapi.repositories;
 
-import com.checkers.gameapi.entities.FriendDto;
+import com.checkers.gameapi.dto.FriendDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

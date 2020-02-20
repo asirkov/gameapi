@@ -63,13 +63,13 @@ CREATE TABLE `playerDto` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `userDto`
+-- Table structure for table `usrDto`
 --
 
-DROP TABLE IF EXISTS `userDto`;
+DROP TABLE IF EXISTS `usrDto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `userDto` (
+CREATE TABLE `usrDto` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `login` varchar(128) NOT NULL,
   `password_hash` varchar(128) NOT NULL,
@@ -78,7 +78,7 @@ CREATE TABLE `userDto` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `login_UNIQUE` (`login`),
   KEY `player_id_user_id_idx` (`player_id`),
-  CONSTRAINT `player_id_user_id` FOREIGN KEY (`player_id`) REFERENCES `userDto` (`id`) ON UPDATE CASCADE
+  CONSTRAINT `player_id_user_id` FOREIGN KEY (`player_id`) REFERENCES `usrDto` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

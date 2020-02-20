@@ -1,13 +1,12 @@
-package com.checkers.gameapi.entities;
+package com.checkers.gameapi.dto;
 
 
-import com.checkers.gameapi.enums.GameResult;
+import com.checkers.gameapi.dto.enums.GameResult;
 import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
