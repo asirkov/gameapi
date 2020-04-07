@@ -1,29 +1,25 @@
 package com.checkers.gameapi.model;
 
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.util.Date;
+import javax.validation.constraints.NotNull;
 
 @ToString
-@Builder
-@Getter@Setter
-@Entity@Table(name = "usr")
+@SuperBuilder
+@Getter @Setter
+@Entity @Table(name = "usrs")
+@NoArgsConstructor
 @AllArgsConstructor
-public class UsrEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
-
-    @Column(name = "usr_name")
+public class UsrEntity extends BaseEntity {
+    @Column(name = "usr_name", unique = true, nullable = false)
     private String usrName;
-    @Column(name = "player_name")
+
+    @Column(name = "player_name", nullable = false)
     private String playerName;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "games_count")
@@ -36,20 +32,7 @@ public class UsrEntity {
     @Column(name = "avatar_data")
     private byte[] avatarData;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "session_id", referencedColumnName = "id")
-    private SessionEntity session;
 
     @Column(name = "online")
     private Boolean online;
-
-    @CreatedDate
-    @Column(name = "created_at")
-    private Date createdAt;
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    private Date updatedAt;
-
-    public UsrEntity() {
-    }
 }

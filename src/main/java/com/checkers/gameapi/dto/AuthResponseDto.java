@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 public class AuthResponseDto {
-    private final String usrName;
     private final String token;
+    private final String message;
+    private final Long id;
+    private final Boolean authorized;
 }

@@ -2,10 +2,9 @@ package com.checkers.gameapi.rest;
 
 import com.checkers.gameapi.dto.AuthRequestDto;
 import com.checkers.gameapi.dto.AuthResponseDto;
-import com.checkers.gameapi.dto.UsrDto;
-import com.checkers.gameapi.model.SessionEntity;
+import com.checkers.gameapi.dto.RegisterRequestDto;
+import com.checkers.gameapi.dto.RegisterResponseDto;
 import com.checkers.gameapi.model.UsrEntity;
-import com.checkers.gameapi.repositories.SessionRepository;
 import com.checkers.gameapi.repositories.UsrRepository;
 import com.checkers.gameapi.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
@@ -31,7 +28,6 @@ public class AuthRestControllerV1 {
     private final JwtTokenProvider jwtTokenProvider;
 
     private final UsrRepository usrRepository;
-    private final SessionRepository sessionRepository;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AuthRequestDto requestDto) {
@@ -42,19 +38,23 @@ public class AuthRestControllerV1 {
 
             if (isNull(usr)) {
                 log.error("IN login - usrName {} not found", requestDto.getUsrName());
-                return ResponseEntity.badRequest().build();
+                return ResponseEntity
+                        .badRequest()
+                        .body(new AuthResponseDto(null, String.format("Can`t find user with name %s", usrName), null, false));
 
             } else {
                 if (!requestDto.getPassword().equals(usr.getPassword())) {
                     log.error("IN login - wrong password for usrName {}", requestDto.getUsrName());
-                    return ResponseEntity.badRequest().build();
+                    return ResponseEntity
+                            .badRequest()
+                            .body(new AuthResponseDto(null, "Wrong password for usrName", null,false));
                 }
 
 //                SessionEntity session = usr.get().getSession();
 
                 String token = jwtTokenProvider.createToken(usr);
-                AuthResponseDto response = new AuthResponseDto(usrName, token);
-                return ResponseEntity.ok(response);
+                return ResponseEntity
+                        .ok(new AuthResponseDto(token, "Successfully authorized", usr.getId(), true));
             }
         } catch (AuthenticationException aEx) {
             throw new BadCredentialsException("Invalid usrName or password.");
@@ -62,20 +62,22 @@ public class AuthRestControllerV1 {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody UsrDto usrDto) {
+    public ResponseEntity register(@RequestBody RegisterRequestDto requestDto) {
 
-        UsrEntity existingUsr = usrRepository.findByUsrName(usrDto.getUsrName());
+        UsrEntity existingUsr = usrRepository.findByUsrName(requestDto.getUserName());
 
         if (nonNull(existingUsr)) {
-            log.info("IN register - usr with name {} already exists", usrDto.getUsrName());
-            return ResponseEntity.badRequest().body("Usr with usrName already exists");
+            log.info("IN register - usr with name {} already exists", requestDto.getUserName());
+            return ResponseEntity
+                    .badRequest()
+                    .body(new RegisterResponseDto(null, "Usr with usrName already exists", false));
         }
 
         UsrEntity newUsr = UsrEntity.builder()
-                .usrName(usrDto.getUsrName())
-                .playerName(usrDto.getPlayerName())
-                .password(usrDto.getHashedPassword())
-                .avatarData(usrDto.getAvatarData())
+                .usrName(requestDto.getUserName())
+                .playerName(requestDto.getPlayerName())
+                .password(requestDto.getPasswordHash())
+                .avatarData(requestDto.getAvatarData())
                 .gamesCount(0L)
                 .losesCount(0L)
                 .winsCount(0L)
@@ -83,7 +85,9 @@ public class AuthRestControllerV1 {
                 .build();
 
         UsrEntity savedUsr = usrRepository.save(newUsr);
+        log.info("Usr with name {} created successfully", requestDto.getUserName());
 
-        return ResponseEntity.ok("Usr successfully created");
+        return ResponseEntity
+                .ok(new RegisterResponseDto(null, "Registration was successful", true));
     }
 }
