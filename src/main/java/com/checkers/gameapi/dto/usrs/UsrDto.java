@@ -1,5 +1,6 @@
-package com.checkers.gameapi.dto;
+package com.checkers.gameapi.dto.usrs;
 
+import com.checkers.gameapi.dto.BaseDto;
 import com.checkers.gameapi.model.UsrEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -17,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder(
         {"id", "playerName","gamesCount", "winsCount", "losesCount", "online", "createdAt", "updatedAt" })
-public class UsrDto extends BaseDto{
+public class UsrDto extends BaseDto {
     private String playerName;
 
     private Long gamesCount;

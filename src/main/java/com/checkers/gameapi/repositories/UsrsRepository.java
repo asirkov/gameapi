@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UsrRepository extends JpaRepository<UsrEntity, Long> {
+public interface UsrsRepository extends JpaRepository<UsrEntity, Long> {
     public UsrEntity findByUsrName(String userName);
     public List<UsrEntity> findByOnline(boolean online);
 }

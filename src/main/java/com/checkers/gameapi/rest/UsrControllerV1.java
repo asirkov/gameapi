@@ -1,18 +1,16 @@
 package com.checkers.gameapi.rest;
 
-import com.checkers.gameapi.dto.UsrDto;
-import com.checkers.gameapi.dto.UsrResponseDto;
-import com.checkers.gameapi.dto.UsrsListResponseDto;
+import com.checkers.gameapi.dto.usrs.UsrDto;
+import com.checkers.gameapi.dto.usrs.UsrResponseDto;
+import com.checkers.gameapi.dto.usrs.UsrsListResponseDto;
 import com.checkers.gameapi.model.UsrEntity;
-import com.checkers.gameapi.repositories.UsrRepository;
+import com.checkers.gameapi.repositories.UsrsRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.function.Function;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
@@ -21,14 +19,14 @@ import static java.util.Objects.nonNull;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 public class UsrControllerV1 {
-    private final UsrRepository usrRepository;
+    private final UsrsRepository usrsRepository;
 
     @GetMapping("/users")
-    public UsrsListResponseDto getUsersList(
+    public ResponseEntity<UsrsListResponseDto> getUsersList(
             @RequestParam(name = "q", required = false) String searchQuery,
             @RequestParam(name = "online", required = false) Boolean online
             ) {
-        List<UsrDto> usrDtoList = usrRepository.findAll().stream()
+        List<UsrDto> usrDtoList = usrsRepository.findAll().stream()
                 .map(UsrDto::ofEntity)
                 .collect(Collectors.toUnmodifiableList());
 
@@ -43,14 +41,27 @@ public class UsrControllerV1 {
                     .collect(Collectors.toList());
         }
 
-        return new UsrsListResponseDto(null, null, usrDtoList.size(), usrDtoList);
+        return ResponseEntity.ok().body(new UsrsListResponseDto(null, null, usrDtoList.size(), usrDtoList));
     }
 
     @GetMapping("/users/{id}")
-    public UsrResponseDto getUser(@PathVariable("id") Long userId) throws NoSuchElementException {
-        final Optional<UsrEntity> usrEntity = usrRepository.findById(userId);
+    public ResponseEntity<UsrResponseDto> getUser(@PathVariable("id") Long userId) throws NoSuchElementException {
+        final Optional<UsrEntity> usrEntityOpt = usrsRepository.findById(userId);
 
-        return usrEntity.map(entity -> new UsrResponseDto(null, null, UsrDto.ofEntity(entity)))
-                .orElseGet(() -> new UsrResponseDto(null, String.format("Can`t get user with id=%s", userId), null));
+        if (usrEntityOpt.isPresent())
+            return ResponseEntity.ok().body(new UsrResponseDto(null, null, UsrDto.ofEntity(usrEntityOpt.get())));
+        else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new UsrResponseDto(null, String.format("Can`t get user with id=%s", userId), null));
+    }
+
+    @GetMapping("/users/{id}/avatar")
+    public ResponseEntity<String> getUserAvatar(@PathVariable("id") Long userId) throws NoSuchElementException {
+        final Optional<UsrEntity> usrEntityOpt = usrsRepository.findById(userId);
+
+        if (usrEntityOpt.isPresent())
+            return ResponseEntity.ok().body(Base64.getEncoder().encodeToString(usrEntityOpt.get().getAvatarData()));
+        else
+            return ResponseEntity.notFound().build();
     }
 }

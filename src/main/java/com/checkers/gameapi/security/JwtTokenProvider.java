@@ -1,7 +1,7 @@
 package com.checkers.gameapi.security;
 
 import com.checkers.gameapi.model.UsrEntity;
-import com.checkers.gameapi.repositories.UsrRepository;
+import com.checkers.gameapi.repositories.UsrsRepository;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +22,7 @@ public class JwtTokenProvider {
     @Value("${jwt.token.expired}")
     private long validInMillis;
 
-    private final UsrRepository usrRepository;
+    private final UsrsRepository usrsRepository;
 //    private final SessionRepository sessionRepository;
 
     @PostConstruct

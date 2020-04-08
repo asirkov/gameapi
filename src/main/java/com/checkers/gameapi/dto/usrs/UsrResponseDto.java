@@ -1,4 +1,4 @@
-package com.checkers.gameapi.dto;
+package com.checkers.gameapi.dto.usrs;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -14,5 +14,5 @@ import lombok.ToString;
 public class UsrResponseDto {
     private String token;
     private String message;
-    private UsrDto usr;
+    private UsrDto user;
 }

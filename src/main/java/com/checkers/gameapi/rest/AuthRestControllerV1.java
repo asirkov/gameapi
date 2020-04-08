@@ -1,11 +1,11 @@
 package com.checkers.gameapi.rest;
 
-import com.checkers.gameapi.dto.AuthRequestDto;
-import com.checkers.gameapi.dto.AuthResponseDto;
-import com.checkers.gameapi.dto.RegisterRequestDto;
-import com.checkers.gameapi.dto.RegisterResponseDto;
+import com.checkers.gameapi.dto.auth.AuthRequestDto;
+import com.checkers.gameapi.dto.auth.AuthResponseDto;
+import com.checkers.gameapi.dto.auth.RegisterRequestDto;
+import com.checkers.gameapi.dto.auth.RegisterResponseDto;
 import com.checkers.gameapi.model.UsrEntity;
-import com.checkers.gameapi.repositories.UsrRepository;
+import com.checkers.gameapi.repositories.UsrsRepository;
 import com.checkers.gameapi.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,14 +27,14 @@ import static java.util.Objects.nonNull;
 public class AuthRestControllerV1 {
     private final JwtTokenProvider jwtTokenProvider;
 
-    private final UsrRepository usrRepository;
+    private final UsrsRepository usrsRepository;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AuthRequestDto requestDto) {
         try {
             String usrName = requestDto.getUsrName();
 
-            UsrEntity usr = usrRepository.findByUsrName(usrName);
+            UsrEntity usr = usrsRepository.findByUsrName(usrName);
 
             if (isNull(usr)) {
                 log.error("IN login - usrName {} not found", requestDto.getUsrName());
@@ -64,7 +64,7 @@ public class AuthRestControllerV1 {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterRequestDto requestDto) {
 
-        UsrEntity existingUsr = usrRepository.findByUsrName(requestDto.getUserName());
+        UsrEntity existingUsr = usrsRepository.findByUsrName(requestDto.getUserName());
 
         if (nonNull(existingUsr)) {
             log.info("IN register - usr with name {} already exists", requestDto.getUserName());
@@ -84,7 +84,7 @@ public class AuthRestControllerV1 {
                 .online(false)
                 .build();
 
-        UsrEntity savedUsr = usrRepository.save(newUsr);
+        UsrEntity savedUsr = usrsRepository.save(newUsr);
         log.info("Usr with name {} created successfully", requestDto.getUserName());
 
         return ResponseEntity

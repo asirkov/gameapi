@@ -1,4 +1,4 @@
-package com.checkers.gameapi.dto;
+package com.checkers.gameapi.dto.usrs;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -20,5 +20,5 @@ public class UsrsListResponseDto {
     private String token;
     private String message;
     private Integer totalCount;
-    private List<UsrDto> entities;
+    private List<UsrDto> users;
 }

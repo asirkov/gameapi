@@ -1,4 +1,4 @@
-package com.checkers.gameapi.dto;
+package com.checkers.gameapi.dto.auth;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

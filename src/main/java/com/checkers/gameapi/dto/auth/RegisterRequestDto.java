@@ -1,4 +1,4 @@
-package com.checkers.gameapi.dto;
+package com.checkers.gameapi.dto.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
