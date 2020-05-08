@@ -5,6 +5,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.sql.Blob;
 
 @ToString
 @SuperBuilder
@@ -29,6 +30,7 @@ public class UsrEntity extends BaseEntity {
     @Column(name = "loses_count")
     private Long losesCount;
 
+    @Lob
     @Column(name = "avatar_data")
     private byte[] avatarData;
 

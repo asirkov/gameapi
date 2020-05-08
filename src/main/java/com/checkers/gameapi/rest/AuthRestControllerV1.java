@@ -5,7 +5,7 @@ import com.checkers.gameapi.dto.auth.AuthResponseDto;
 import com.checkers.gameapi.dto.auth.RegisterRequestDto;
 import com.checkers.gameapi.dto.auth.RegisterResponseDto;
 import com.checkers.gameapi.model.UsrEntity;
-import com.checkers.gameapi.repositories.UsrsRepository;
+import com.checkers.gameapi.dao.UsrsRepository;
 import com.checkers.gameapi.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.sql.Blob;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -49,8 +51,6 @@ public class AuthRestControllerV1 {
                             .badRequest()
                             .body(new AuthResponseDto(null, "Wrong password for usrName", null,false));
                 }
-
-//                SessionEntity session = usr.get().getSession();
 
                 String token = jwtTokenProvider.createToken(usr);
                 return ResponseEntity

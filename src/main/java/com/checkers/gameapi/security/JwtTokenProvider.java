@@ -1,7 +1,7 @@
 package com.checkers.gameapi.security;
 
 import com.checkers.gameapi.model.UsrEntity;
-import com.checkers.gameapi.repositories.UsrsRepository;
+import com.checkers.gameapi.dao.UsrsRepository;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

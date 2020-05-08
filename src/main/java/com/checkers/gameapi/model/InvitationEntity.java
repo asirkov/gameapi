@@ -9,19 +9,25 @@ import javax.persistence.*;
 @ToString
 @SuperBuilder
 @Getter @Setter
-@Entity @Table(name = "invitations")
+@Entity
+@Table(name = "invitations",
+       uniqueConstraints = { @UniqueConstraint(columnNames = {"from_usr_id", "to_usr_id", "game_id"}) })
 @NoArgsConstructor
 public class InvitationEntity extends BaseEntity {
-    @Column(name = "game_id", nullable = false)
-    Integer gameId;
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = GameEntity.class)
+    @JoinColumn(name = "game_id", referencedColumnName = "id")
+    private GameEntity game;
 
-    @Column(name = "from_usr_id", nullable = false)
-    Integer fromUsrId;
-    @Column(name = "to_usr_id", nullable = false)
-    Integer toUsrId;
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = UsrEntity.class)
+    @JoinColumn(name = "from_usr_id", referencedColumnName = "id", nullable = false)
+    private UsrEntity fromUsr;
+
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = UsrEntity.class)
+    @JoinColumn(name = "to_usr_id", referencedColumnName = "id", nullable = false)
+    private UsrEntity toUsr;
 
     @Column(name = "text")
-    String text;
+    private String text;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "invitation_status", nullable = false)

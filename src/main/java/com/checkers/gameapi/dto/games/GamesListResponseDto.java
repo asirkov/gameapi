@@ -1,4 +1,4 @@
-package com.checkers.gameapi.dto.usrs;
+package com.checkers.gameapi.dto.games;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -15,9 +15,9 @@ import java.util.List;
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UsrsListResponseDto {
+public class GamesListResponseDto {
     private String token;
     private String message;
     private Integer totalCount;
-    private List<UsrDto> users;
+    private List<GameDto> games;
 }

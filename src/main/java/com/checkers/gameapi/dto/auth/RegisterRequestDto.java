@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import lombok.*;
 
+import java.sql.Blob;
+
 @Getter
 @Setter
 @ToString

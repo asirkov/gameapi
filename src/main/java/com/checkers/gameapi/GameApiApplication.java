@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@EnableJpaRepositories("com.checkers.gameapi.repositories")
+@EnableJpaRepositories("com.checkers.gameapi.dao")
 @SpringBootApplication
 public class GameApiApplication {
 

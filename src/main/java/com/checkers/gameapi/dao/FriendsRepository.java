@@ -1,4 +1,4 @@
-package com.checkers.gameapi.repositories;
+package com.checkers.gameapi.dao;
 
 import com.checkers.gameapi.model.FriendEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
